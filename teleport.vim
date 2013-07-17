@@ -26,6 +26,10 @@ function! s:HomeRowNum()
   endwhile
 endfunction
 
+function! s:AddToJumpList()
+  normal! m`
+endfunction
+
 " The following four functions perform either an absolute jump or a relative
 " jump, depending on the value of &number.
 function! s:OneDigitJumpDown()
@@ -66,6 +70,7 @@ function! s:OneDigitRelJump(motion, direction)
   let m = s:HomeRowNum()
   if m == -1
     redraw | echo | return | endif
+  call s:AddToJumpList()
   execute "normal! " . m . a:motion
   redraw | echo m . a:motion
 endfunction
@@ -81,6 +86,7 @@ function! s:TwoDigitRelJump(motion, direction)
   let n = s:HomeRowNum()
   if n == -1
     redraw | echo | return | endif
+  call s:AddToJumpList()
   execute "normal! " . m . n . a:motion
   redraw | echo m . n . a:motion
 endfunction
@@ -95,6 +101,7 @@ function! s:OneDigitAbsJump()
   let linenr = s:GetAbsJumpLineNumber(twodigit)
   if linenr == -1
     redraw | echo s:ABS_JUMP_ERROR_MSG . twodigit | return | endif
+  call s:AddToJumpList()
   execute linenr
   redraw | echo
 endfunction
@@ -112,6 +119,7 @@ function! s:TwoDigitAbsJump()
   let linenr = s:GetAbsJumpLineNumber(twodigit)
   if linenr == -1
     redraw | echo s:ABS_JUMP_ERROR_MSG . twodigit | return | endif
+  call s:AddToJumpList()
   execute linenr
   redraw | echo
 endfunction
