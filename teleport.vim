@@ -137,13 +137,18 @@ function! s:GetAbsJumpLineNumber(twodigit)
 endfunction
 
 " Dvorak keybindings
-noremap <silent> <Leader><C-H> :call <SID>OneDigitJumpDown()<CR>
-noremap <silent> <Leader><C-T> :call <SID>OneDigitJumpUp()<CR>
-noremap <silent> <Leader>h :call <SID>TwoDigitJumpDown()<CR>
-noremap <silent> <Leader>t :call <SID>TwoDigitJumpUp()<CR>
+"noremap <silent> <Leader><C-H> :call <SID>OneDigitJumpDown()<CR>
+"noremap <silent> <Leader><C-T> :call <SID>OneDigitJumpUp()<CR>
+"noremap <silent> <Leader>h :call <SID>TwoDigitJumpDown()<CR>
+"noremap <silent> <Leader>t :call <SID>TwoDigitJumpUp()<CR>
 
 " QWERTY keybindings
 "noremap <silent> <Leader><C-J> :call <SID>OneDigitJumpDown()<CR>
 "noremap <silent> <Leader><C-K> :call <SID>OneDigitJumpUp()<CR>
 "noremap <silent> <Leader>j :call <SID>TwoDigitJumpDown()<CR>
 "noremap <silent> <Leader>k :call <SID>TwoDigitJumpUp()<CR>
+
+command! TeleportOneDigitJumpDown call <SID>OneDigitJumpDown()
+command! TeleportOneDigitJumpUp call <SID>OneDigitJumpUp()
+command! TeleportTwoDigitJumpDown call <SID>TwoDigitJumpDown()
+command! TeleportTwoDigitJumpUp call <SID>TwoDigitJumpUp()
