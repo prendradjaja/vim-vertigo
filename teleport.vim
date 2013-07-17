@@ -62,7 +62,7 @@ endfunction
 
 " The following two functions perform a relative jump.
 function! s:OneDigitRelJump(motion, direction)
-  echo 'Jump ' . a:direction . ': '
+  echo 'Jump ' . a:direction . ' (one-digit): '
   let m = s:HomeRowNum()
   if m == -1
     redraw | echo | return | endif
