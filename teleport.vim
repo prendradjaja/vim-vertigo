@@ -74,7 +74,9 @@ function! s:TwoDigitRelJump(motion, direction)
   echo 'Jump ' . a:direction . ': '
   let m = s:HomeRowNum()
   if m == -1
-    redraw | echo | return | endif
+    redraw | echo | return
+  elseif m == 0
+    redraw | call s:OneDigitRelJump(a:motion, a:direction) | return | endif
   redraw | echo 'Jump ' . a:direction . ': ' . m
   let n = s:HomeRowNum()
   if n == -1
