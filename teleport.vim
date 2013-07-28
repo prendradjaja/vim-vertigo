@@ -13,8 +13,6 @@ endfor
 let s:keymap[s:homerow[9]] = 0
 let s:keymap_onedigit[s:homerow_onedigit[9]] = 0
 
-let s:ABS_JUMP_ERROR_MSG = '[Teleport.vim] Bad line number: '
-
 command! -nargs=1 TeleportDown call <SID>Teleport('j', 'down', '<args>')
 command! -nargs=1 TeleportUp   call <SID>Teleport('k', 'up',   '<args>')
 
@@ -172,7 +170,7 @@ function! s:DoAbsoluteJump(twodigit, mode)
   if linenr ==# -1
     redraw
     echohl ErrorMsg
-    echo s:ABS_JUMP_ERROR_MSG . a:twodigit
+    echo '[Teleport.vim] Bad line number: ' . a:twodigit
     echohl None
     return | endif
   let curline = line('.')
