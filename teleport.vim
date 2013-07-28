@@ -65,7 +65,7 @@ function! s:PromptRelativeJump(motion, direction, mode)
   let m = s:GetUserInput(promptstr)
   if m[0] == 0
     redraw | echo | return
-  elseif m[0] == 2
+  elseif m[0] == 1
     call s:DoRelativeJump(m[1], a:motion, a:mode)
     return | endif
   let promptstr .= m[1]
@@ -80,7 +80,7 @@ function! s:PromptAbsoluteJump(mode)
   let m = s:GetUserInput(promptstr)
   if m[0] == 0
     redraw | echo | return
-  elseif m[0] == 2
+  elseif m[0] == 1
     call s:DoAbsoluteJump(m[1], a:mode)
     return | endif
   let promptstr .= m[1]
@@ -90,23 +90,34 @@ function! s:PromptAbsoluteJump(mode)
   call s:DoAbsoluteJump(m[1].n[1], a:mode)
 endfunction
 
-function! s:GetUserInput(text)
-  " Returns a list describing the user's input:
-  "  - [0] for canceling
-  "  - [1, n] for a single digit of a two-digit number
-  "  - [2, n] for a one-digit number
+function! s:GetUserInput(promptstr)
+"*****************************************************************************
+"* ARGUMENTS:
+"    promptstr:  A string to prompt the user for input. When first called,
+"                 this will be something like 'Jump: ', but after the user
+"                 enters a digit, this will be something like 'Jump: 3'. (to
+"                 simulate typing)
+"* EFFECTS:
+"    Prompts the user to jump. Only accepts input from the home row keys or ^C
+"    or <Esc> to cancel.
+"* RETURNS:
+"    A list describing the user's input, as follows.
+"    - [0] for canceling
+"    - [1, n] for a one-digit number
+"    - [2, n] for one digit of a two-digit number
+"*****************************************************************************
   redraw
   echohl Question
-  echo a:text
+  echo a:promptstr
   echohl None
   while 1
     let c = nr2char(getchar())
     if c == '' || c == ''
       return [0]
-    elseif has_key(s:keymap, c)
-      return [1, s:keymap[c]]
     elseif has_key(s:keymap_onedigit, c)
-      return [2, s:keymap_onedigit[c]]
+      return [1, s:keymap_onedigit[c]]
+    elseif has_key(s:keymap, c)
+      return [2, s:keymap[c]]
     endif
   endwhile
 endfunction
