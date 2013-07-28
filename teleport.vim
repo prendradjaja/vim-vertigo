@@ -1,127 +1,124 @@
 let s:homerow = 'aoeuidhtns'
-"let s:homerow = 'asdfghjkl;'
+let s:homerow_shift = 'AOEUIDHTNS'
+let s:landing = '_'
 
-" A dictionary mapping home-row keys to numbers 0-9. -1 is for cancelling.
-let s:keymap = {
-  \ '': -1,
-  \ '': -1}
+let s:keymap = {}
+let s:keymap_shift = {}
 
 " Add keys from s:homerow to s:keymap
-let num = 1
-for s:key in split(s:homerow, '\zs') " split on characters
-  let s:keymap[s:key] = num%10
-  let num = num + 1
+for i in range(0, 8)
+  let s:keymap[s:homerow[i]] = i+1
+  let s:keymap_shift[s:homerow_shift[i]] = i+1
 endfor
+let s:keymap[s:homerow[9]] = 0
+let s:keymap_shift[s:homerow_shift[9]] = 0
 
-let s:ABS_JUMP_ERROR_MSG = 'Invalid abs jump: '
+let s:ABS_JUMP_ERROR_MSG = '[Teleport.vim] Bad line number: '
 
-function! s:HomeRowNum()
-  " Get a number from the user. If a key not in s:keymap is pressed, try again.
-  " Returns a number 0-9, or -1 for cancelling.
+command! -nargs=1 TeleportDown call <SID>TeleportDown('<args>')
+command! -nargs=1 TeleportUp call <SID>TeleportUp('<args>')
+
+function! s:TeleportDown(mode)
+  if a:mode == 'v'
+    normal! gv
+  endif
+  if &number
+    call s:PromptAbsoluteJump(mode)
+  else
+    call s:PromptRelativeJump('j', 'down', a:mode)
+  endif
+endfunction
+
+function! s:TeleportUp(mode)
+  if a:mode == 'v'
+    normal! gv
+  endif
+  if &number
+    call s:PromptAbsoluteJump(mode)
+  else
+    call s:PromptRelativeJump('k', 'up', a:mode)
+  endif
+endfunction
+
+function! s:PromptRelativeJump(motion, direction, mode)
+  let promptstr = 'Jump ' . a:direction . ': '
+  let m = s:GetUserInput(promptstr)
+  if m[0] == 0
+    redraw | echo | return
+  elseif m[0] == 2
+    call s:DoRelativeJump(m[1], a:motion, a:mode)
+    return | endif
+  let promptstr .= m[1]
+  let n = s:GetUserInput(promptstr)
+  if n[0] == 0
+    redraw | echo | return | endif
+  call s:DoRelativeJump(m[1].n[1], a:motion, a:mode)
+endfunction
+
+function! s:PromptAbsoluteJump(mode)
+  let promptstr = 'Jump: '
+  let m = s:GetUserInput(promptstr)
+  if m[0] == 0
+    redraw | echo | return
+  elseif m[0] == 2
+    call s:DoAbsoluteJump(m[1], a:mode)
+    return | endif
+  let promptstr .= m[1]
+  let n = s:GetUserInput(promptstr)
+  if n[0] == 0
+    redraw | echo | return | endif
+  call s:DoAbsoluteJump(m[1].n[1], a:mode)
+endfunction
+
+function! s:GetUserInput(text)
+  " Returns a list: [0] for canceling, [1, n] for a single digit of a
+  " two-digit number, [2, n] for a one-digit number
+  redraw
+  echohl Question
+  echo a:text
+  echohl None
   while 1
     let c = nr2char(getchar())
-    if has_key(s:keymap, c)
-      return s:keymap[c]
+    if c == '' || c == ''
+      return [0]
+    elseif has_key(s:keymap, c)
+      return [1, s:keymap[c]]
+    elseif has_key(s:keymap_shift, c)
+      return [2, s:keymap_shift[c]]
     endif
   endwhile
 endfunction
 
-function! s:AddToJumpList()
-  normal! m`
-endfunction
-
-" The following four functions perform either an absolute jump or a relative
-" jump, depending on the value of &number.
-function! s:OneDigitJumpDown()
-  if &number
-    call s:OneDigitAbsJump()
-  else
-    call s:OneDigitRelJump('j', 'down')
+function! s:DoRelativeJump(amount, motion, mode)
+  let amount_nr = str2nr(a:amount)
+  normal! m'
+  if a:mode == 'o'
+    normal! V
   endif
+  execute 'normal! ' . amount_nr . a:motion
+  redraw | echo
 endfunction
 
-function! s:OneDigitJumpUp()
-  if &number
-    call s:OneDigitAbsJump()
-  else
-    call s:OneDigitRelJump('k', 'up')
-  endif
-endfunction
-
-function! s:TwoDigitJumpDown()
-  if &number
-    call s:TwoDigitAbsJump()
-  else
-    call s:TwoDigitRelJump('j', 'down')
-  endif
-endfunction
-
-function! s:TwoDigitJumpUp()
-  if &number
-    call s:TwoDigitAbsJump()
-  else
-    call s:TwoDigitRelJump('k', 'up')
-  endif
-endfunction
-
-" The following two functions perform a relative jump.
-function! s:OneDigitRelJump(motion, direction)
-  echo 'Jump ' . a:direction . ' (one-digit): '
-  let m = s:HomeRowNum()
-  if m == -1
-    redraw | echo | return | endif
-  call s:AddToJumpList()
-  execute "normal! " . m . a:motion
-  redraw | echo m . a:motion
-endfunction
-
-function! s:TwoDigitRelJump(motion, direction)
-  echo 'Jump ' . a:direction . ': '
-  let m = s:HomeRowNum()
-  if m == -1
+function! s:DoAbsoluteJump(twodigit, mode)
+  let twodigit_nr = str2nr(a:twodigit)
+  let linenr = s:GetAbsJumpLineNumber(twodigit_nr)
+  if linenr ==# -1
+    redraw
+    echohl ErrorMsg
+    echo s:ABS_JUMP_ERROR_MSG . a:twodigit
+    echohl None
+    return | endif
+  let curline = line('.')
+  if linenr ==# curline
     redraw | echo | return
-  elseif m == 0
-    redraw | call s:OneDigitRelJump(a:motion, a:direction) | return | endif
-  redraw | echo 'Jump ' . a:direction . ': ' . m
-  let n = s:HomeRowNum()
-  if n == -1
-    redraw | echo | return | endif
-  call s:AddToJumpList()
-  execute "normal! " . m . n . a:motion
-  redraw | echo m . n . a:motion
-endfunction
-
-" The following two functions perform an absolute jump.
-function! s:OneDigitAbsJump()
-  echo 'Jump (one-digit): '
-  let m = s:HomeRowNum()
-  if m == -1
-    redraw | echo | return | endif
-  let twodigit = m
-  let linenr = s:GetAbsJumpLineNumber(twodigit)
-  if linenr == -1
-    redraw | echo s:ABS_JUMP_ERROR_MSG . twodigit | return | endif
-  call s:AddToJumpList()
-  execute linenr
-  redraw | echo
-endfunction
-
-function! s:TwoDigitAbsJump()
-  echo 'Jump: '
-  let m = s:HomeRowNum()
-  if m == -1
-    redraw | echo | return | endif
-  redraw | echo 'Jump: ' . m
-  let n = s:HomeRowNum()
-  if n == -1
-    redraw | echo | return | endif
-  let twodigit = 10*m + n
-  let linenr = s:GetAbsJumpLineNumber(twodigit)
-  if linenr == -1
-    redraw | echo s:ABS_JUMP_ERROR_MSG . twodigit | return | endif
-  call s:AddToJumpList()
-  execute linenr
-  redraw | echo
+  elseif linenr < curline
+    let amount = curline - linenr
+    let motion = 'k'
+  else
+    let amount = linenr - curline
+    let motion = 'j'
+  endif
+  call s:DoRelativeJump(amount, motion, a:mode)
 endfunction
 
 function! s:GetAbsJumpLineNumber(twodigit)
@@ -145,20 +142,3 @@ function! s:GetAbsJumpLineNumber(twodigit)
   endif
   return -1
 endfunction
-
-" Dvorak keybindings
-"noremap <silent> <Leader><C-H> :call <SID>OneDigitJumpDown()<CR>
-"noremap <silent> <Leader><C-T> :call <SID>OneDigitJumpUp()<CR>
-"noremap <silent> <Leader>h :call <SID>TwoDigitJumpDown()<CR>
-"noremap <silent> <Leader>t :call <SID>TwoDigitJumpUp()<CR>
-
-" QWERTY keybindings
-"noremap <silent> <Leader><C-J> :call <SID>OneDigitJumpDown()<CR>
-"noremap <silent> <Leader><C-K> :call <SID>OneDigitJumpUp()<CR>
-"noremap <silent> <Leader>j :call <SID>TwoDigitJumpDown()<CR>
-"noremap <silent> <Leader>k :call <SID>TwoDigitJumpUp()<CR>
-
-command! TeleportOneDigitJumpDown call <SID>OneDigitJumpDown()
-command! TeleportOneDigitJumpUp call <SID>OneDigitJumpUp()
-command! TeleportTwoDigitJumpDown call <SID>TwoDigitJumpDown()
-command! TeleportTwoDigitJumpUp call <SID>TwoDigitJumpUp()
