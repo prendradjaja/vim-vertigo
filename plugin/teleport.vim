@@ -1,5 +1,21 @@
-let s:homerow = 'aoeuidhtns'
-let s:homerow_onedigit = 'AOEUIDHTNS'
+if exists('g:Teleport_loaded') || &compatible
+  finish
+endif
+let g:Teleport_loaded = 1
+
+if !exists('g:Teleport_homerow')
+  let s:homerow = 'aoeuidhtns'
+else
+  let s:homerow = g:Teleport_homerow
+endif
+if !exists('g:Teleport_homerow_onedigit')
+  let s:homerow_onedigit = 'AOEUIDHTNS'
+else
+  let s:homerow_onedigit = g:Teleport_homerow_onedigit
+endif
+echom s:homerow
+echom s:homerow_onedigit
+
 "let s:homerow_onedigit = '	'
 
 command! -nargs=1 TeleportDown call <SID>Teleport('j', 'down', '<args>')
