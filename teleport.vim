@@ -2,19 +2,10 @@ let s:homerow = 'aoeuidhtns'
 let s:homerow_onedigit = 'AOEUIDHTNS'
 "let s:homerow_onedigit = '	'
 
-" These dictionaries are used by GetUserInput() to turn home-row keys into
-" numbers.
-let s:keymap = {}
-let s:keymap_onedigit = {}
-" Fill the dictionaries.
-for i in range(0, 9)
-  let s:keymap[s:homerow[i]] = (i+1)%10
-  let s:keymap_onedigit[s:homerow_onedigit[i]] = (i+1)%10
-endfor
-
 command! -nargs=1 TeleportDown call <SID>Teleport('j', 'down', '<args>')
 command! -nargs=1 TeleportUp   call <SID>Teleport('k', 'up',   '<args>')
 
+"*****************************************************************************
 " General description of control flow:
 "
 " :TeleportDown or :TeleportUp calls Teleport(). Teleport() calls either
@@ -29,6 +20,7 @@ command! -nargs=1 TeleportUp   call <SID>Teleport('k', 'up',   '<args>')
 " down to go, and then call DoRelativeJump().
 "
 " DoRelativeJump() does the actual jump.
+"*****************************************************************************
 
 function! s:Teleport(motion, direction, mode)
 "*****************************************************************************
@@ -134,6 +126,16 @@ function! s:GetUserInput(promptstr)
     endif
   endwhile
 endfunction
+
+" These dictionaries are used by GetUserInput() to turn home-row keys into
+" numbers.
+let s:keymap = {}
+let s:keymap_onedigit = {}
+" Fill the dictionaries.
+for i in range(0, 9)
+  let s:keymap[s:homerow[i]] = (i+1)%10
+  let s:keymap_onedigit[s:homerow_onedigit[i]] = (i+1)%10
+endfor
 
 function! s:DoRelativeJump(lines, motion, mode)
 "*****************************************************************************
