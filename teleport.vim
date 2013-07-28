@@ -53,7 +53,7 @@ function! s:Teleport(motion, direction, mode)
 
   " If using absolute numbering, use an absolute jump. Otherwise, (if using
   " relative numbering, or no line numbering at all) use a relative jump.
-  if &number && !&relativenumber
+  if &number && (!exists('+relativenumber') || !&relativenumber)
     call s:PromptAbsoluteJump(a:mode)
   else
     call s:PromptRelativeJump(a:motion, a:direction, a:mode)
