@@ -99,9 +99,9 @@ function! s:GetUserInput(promptstr)
 "*****************************************************************************
 "* ARGUMENTS:
 "    promptstr:  A string to prompt the user for input. When first called,
-"                 this will be something like 'Jump: ', but after the user
-"                 enters a digit, this will be something like 'Jump: 3'. (to
-"                 simulate typing)
+"                this will be something like 'Jump: ', but after the user
+"                enters a digit, this will be something like 'Jump: 3'. (to
+"                simulate typing)
 "* EFFECTS:
 "    Prompts the user to jump. Only accepts input from the home row keys or ^C
 "    or <Esc> to cancel.
