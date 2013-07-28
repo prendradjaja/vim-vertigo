@@ -13,10 +13,6 @@ if !exists('g:Teleport_homerow_onedigit')
 else
   let s:homerow_onedigit = g:Teleport_homerow_onedigit
 endif
-echom s:homerow
-echom s:homerow_onedigit
-
-"let s:homerow_onedigit = '	'
 
 command! -nargs=1 TeleportDown call <SID>Teleport('j', 'down', '<args>')
 command! -nargs=1 TeleportUp   call <SID>Teleport('k', 'up',   '<args>')
