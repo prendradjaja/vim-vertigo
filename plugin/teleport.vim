@@ -4,12 +4,12 @@ endif
 let g:Teleport_loaded = 1
 
 if !exists('g:Teleport_homerow')
-  let s:homerow = 'aoeuidhtns'
+  let s:homerow = 'asdfghjkl;'
 else
   let s:homerow = g:Teleport_homerow
 endif
 if !exists('g:Teleport_homerow_onedigit')
-  let s:homerow_onedigit = 'AOEUIDHTNS'
+  let s:homerow_onedigit = 'ASDFGHJKL:'
 else
   let s:homerow_onedigit = g:Teleport_homerow_onedigit
 endif
