@@ -1,42 +1,60 @@
 let s:homerow = 'aoeuidhtns'
-let s:homerow_shift = 'AOEUIDHTNS'
-let s:landing = '_'
+let s:homerow_onedigit = 'AOEUIDHTNS'
+"let s:homerow_onedigit = '	'
 
 let s:keymap = {}
-let s:keymap_shift = {}
+let s:keymap_onedigit = {}
 
 " Add keys from s:homerow to s:keymap
 for i in range(0, 8)
   let s:keymap[s:homerow[i]] = i+1
-  let s:keymap_shift[s:homerow_shift[i]] = i+1
+  let s:keymap_onedigit[s:homerow_onedigit[i]] = i+1
 endfor
 let s:keymap[s:homerow[9]] = 0
-let s:keymap_shift[s:homerow_shift[9]] = 0
+let s:keymap_onedigit[s:homerow_onedigit[9]] = 0
 
 let s:ABS_JUMP_ERROR_MSG = '[Teleport.vim] Bad line number: '
 
-command! -nargs=1 TeleportDown call <SID>TeleportDown('<args>')
-command! -nargs=1 TeleportUp call <SID>TeleportUp('<args>')
+command! -nargs=1 TeleportDown call <SID>Teleport('j', 'down', '<args>')
+command! -nargs=1 TeleportUp   call <SID>Teleport('k', 'up',   '<args>')
 
-function! s:TeleportDown(mode)
+" General description of control flow:
+"
+" Teleport() calls either PromptAbsoluteJump() or PromptRelativeJump(). (from
+" here forward, *** will be used in place of 'either absolute or relative',
+" e.g., Teleport calls Prompt***Jump(). )
+"
+" Prompt***Jump() prompts the user for input using GetUserInput(). If the user
+" doesn't cancel, Do***Jump() is called with the user's input.
+"
+" If using DoAbsoluteJump(), that function will calculate how many lines up or
+" down to go, and then call DoRelativeJump().
+"
+" DoRelativeJump() does the actual jump.
+
+function! s:Teleport(motion, direction, mode)
+"*****************************************************************************
+"* ARGUMENTS:
+"   - motion:     Which motion to use. ('j' or 'k')
+"   - direction:  A description of the motion. ('down' or 'up')
+"                 Used to prompt the user 'Jump down: ' or 'Jump up: '
+"   - mode:       An abbreviation for which Vim mode the user is in. ('n',
+"                 'v', or 'o', corresponding to :h map-modes)
+"* EFFECTS:
+"   Prompts the user to jump. After this function exits, the cursor is moved.
+"   Returns nothing.
+"*****************************************************************************
+
+  " If used in visual mode, Vim exited visual mode in order to get here.
+  " Re-enter visual mode.
   if a:mode == 'v'
     normal! gv
   endif
-  if &number
-    call s:PromptAbsoluteJump(mode)
-  else
-    call s:PromptRelativeJump('j', 'down', a:mode)
-  endif
-endfunction
 
-function! s:TeleportUp(mode)
-  if a:mode == 'v'
-    normal! gv
-  endif
   if &number
-    call s:PromptAbsoluteJump(mode)
+    call s:PromptAbsoluteJump(a:mode)
   else
-    call s:PromptRelativeJump('k', 'up', a:mode)
+    call s:PromptRelativeJump(a:motion, a:direction, a:mode)
   endif
 endfunction
 
@@ -71,8 +89,10 @@ function! s:PromptAbsoluteJump(mode)
 endfunction
 
 function! s:GetUserInput(text)
-  " Returns a list: [0] for canceling, [1, n] for a single digit of a
-  " two-digit number, [2, n] for a one-digit number
+  " Returns a list describing the user's input:
+  "  - [0] for canceling
+  "  - [1, n] for a single digit of a two-digit number
+  "  - [2, n] for a one-digit number
   redraw
   echohl Question
   echo a:text
@@ -83,8 +103,8 @@ function! s:GetUserInput(text)
       return [0]
     elseif has_key(s:keymap, c)
       return [1, s:keymap[c]]
-    elseif has_key(s:keymap_shift, c)
-      return [2, s:keymap_shift[c]]
+    elseif has_key(s:keymap_onedigit, c)
+      return [2, s:keymap_onedigit[c]]
     endif
   endwhile
 endfunction
