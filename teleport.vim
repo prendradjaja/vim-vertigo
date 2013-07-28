@@ -2,16 +2,15 @@ let s:homerow = 'aoeuidhtns'
 let s:homerow_onedigit = 'AOEUIDHTNS'
 "let s:homerow_onedigit = '	'
 
+" These dictionaries are used by GetUserInput() to turn home-row keys into
+" numbers.
 let s:keymap = {}
 let s:keymap_onedigit = {}
-
-" Add keys from s:homerow to s:keymap
-for i in range(0, 8)
-  let s:keymap[s:homerow[i]] = i+1
-  let s:keymap_onedigit[s:homerow_onedigit[i]] = i+1
+" Fill the dictionaries.
+for i in range(0, 9)
+  let s:keymap[s:homerow[i]] = (i+1)%10
+  let s:keymap_onedigit[s:homerow_onedigit[i]] = (i+1)%10
 endfor
-let s:keymap[s:homerow[9]] = 0
-let s:keymap_onedigit[s:homerow_onedigit[9]] = 0
 
 command! -nargs=1 TeleportDown call <SID>Teleport('j', 'down', '<args>')
 command! -nargs=1 TeleportUp   call <SID>Teleport('k', 'up',   '<args>')
