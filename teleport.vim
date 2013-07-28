@@ -202,15 +202,15 @@ function! s:GetAbsJumpLineNumber(twodigit)
 "    s:AbsJump(12) = 312
 "    s:AbsJump(22) = -1
 "*****************************************************************************
-  let bottom = line('w0')
-  let top = line('w$')
-  let hundreds = bottom / 100 * 100
+  let start = line('w0')
+  let end = line('w$')
+  let hundreds = start / 100 * 100
   let try = hundreds + a:twodigit
-  if try >= bottom && try <= top
+  if try >= start && try <= end
     return try
   endif
   let try = try + 100
-  if try <= top
+  if try <= end
     return try
   endif
   return -1
