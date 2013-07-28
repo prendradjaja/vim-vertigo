@@ -1,3 +1,6 @@
+" Teleport.vim
+" https://github.com/prendradjaja/vim-teleport
+
 if exists('g:Teleport_loaded') || &compatible
   finish
 endif
