@@ -17,8 +17,7 @@ that, you're 14 lines down.
 Why?
 ----
 
-Why not just use `4k` or `22j` when you need to? And doesn't [EasyMotion](https://github.com/Lokaltog/vim-easymotion) cover
-this, and more?
+Can't I just use `4k` or `22j` when I need to? And doesn't [EasyMotion](https://github.com/Lokaltog/vim-easymotion) cover this, and more? Well...
 
 * It's faster.
 * It's more comfortable.
