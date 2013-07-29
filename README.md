@@ -67,6 +67,8 @@ After installing, you'll have to put in a few mappings into your .vimrc. Here's 
     vnoremap <silent> <Space>k :<C-U>VertigoUp v<CR>
     onoremap <silent> <Space>k :<C-U>VertigoUp o<CR>
 
-One last thing. Make sure you've got `relativenumber` and/or `number` turned on, and you're good to go!
+One last thing. Make sure you've got `relativenumber` and/or `number` (while
+the examples above used relative numbering, Vertigo works just as well with
+absolute line numbers) turned on, and you're good to go!
 
     set relativenumber
