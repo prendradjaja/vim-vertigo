@@ -1,4 +1,4 @@
-*vertigo.txt*  Vertigo.vim: A better way to move vertically (ver. 0.0)
+*vertigo.txt*   Vertigo.vim: A better way to move vertically (ver. 0.0)
 
 CONTENTS
 --------
