@@ -186,7 +186,7 @@ function! s:DoRelativeJump(lines, motion, msg, mode)
 "* EFFECTS:
 "    Jumps 'lines' lines up or down, according to 'motion'.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  call s:DoJump(a:lines, a:motion, a:msg.' ---', a:mode)
+  call s:DoJump(a:lines, a:motion, a:msg.' --', a:mode)
 endfunction
 
 function! s:DoAbsoluteJump(twodigit, msg, mode)
