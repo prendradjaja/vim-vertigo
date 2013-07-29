@@ -9,10 +9,15 @@ leave home row.
 To show how Vertigo works, let's look an example: say you want to go to some
 line that you can see (with `relativenumber`) is 14 lines down.
 
-With this plugin, you'd press <Space>j to activate "jump mode." Vim then waits
+With this plugin, you'd press `<Space>j` to activate "jump mode." Vim then waits
 for two home-row keypresses representing a two-digit number, mapping
-`asdfghjkl;` to `1234567890`. You then press `af` for `14`, and just like
-that, you're 14 lines down.
+`asdfghjkl;` to `1234567890`. You then press `af` for 14, and just like
+that, you're 14 lines down. Easy! For one-digit numbers, just hit shift.
+(`<Space>jF` goes four lines down)
+
+If you use a keyboard layout other than QWERTY, that's not a problem! Dvorak
+users: just add `let g:Vertigo_homerow = 'aoeuidhtns'` to your .vimrc file.
+Other keyboards should work too. (see `:h vertigo-homerow`)
 
 Why?
 ----
