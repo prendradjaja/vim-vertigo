@@ -56,7 +56,7 @@ I haven't personally used other plugin managers, but this should work with any o
 
 For manual installation, copy into `~/.vim`, so plugin/teleport.vim goes to `~/.vim/plugin` and doc/teleport.txt goes to `~/.vim/doc`.
 
-------------------------------------------------------------------------------
+### .vimrc mappings
 
 After installing, you'll have to put in a few mappings into your .vimrc. Here's one option: (though of course you can change `<Space>j` and `<Space>k` to whatever works for you.
 
