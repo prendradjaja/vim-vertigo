@@ -29,18 +29,25 @@ Can't I just use `4k` or `22j` when I need to? And doesn't [EasyMotion](https://
 Installation
 ------------
 
-This should work with all the standard plugin managers.
+I recommend [Pathogen](https://github.com/tpope/vim-pathogen):
 
-* With [Pathogen](https://github.com/tpope/vim-pathogen):
-    * `git clone https://github.com/prendradjaja/vim-vertigo.git ~/.vim/bundle/vim-vertigo`
-* With Pathogen, as [submodule](http://vimcasts.org/episodes/synchronizing-plugins-with-git-submodules-and-pathogen/):
-    * `git submodule add https://github.com/prendradjaja/vim-vertigo.git ~/.vim/bundle/vim-vertigo`
+    cd ~/.vim
+    git clone https://github.com/prendradjaja/vim-vertigo.git bundle/vim-vertigo
+
+Alternatively, with Pathogen, using a git [submodule](http://vimcasts.org/episodes/synchronizing-plugins-with-git-submodules-and-pathogen/):
+    cd ~/.vim
+    git submodule add https://github.com/prendradjaja/vim-vertigo.git bundle/vim-vertigo
+
+I haven't personally used other plugin managers, but this should work with any of the ordinary plugin managers.
+
 * With [NeoBundle](https://github.com/Shougo/neobundle.vim):
     *  `NeoBundle 'prendradjaja/vim-vertigo'`
 * With [Vundle](https://github.com/gmarik/vundle):
     *  `Bundle 'prendradjaja/vim-vertigo'`
-* Manual installation:
-    * Copy into `~/.vim`, so plugin/teleport.vim goes to `~/.vim/plugin` and doc/teleport.txt goes to `~/.vim/doc`.
+
+For manual installation, copy into `~/.vim`, so plugin/teleport.vim goes to `~/.vim/plugin` and doc/teleport.txt goes to `~/.vim/doc`.
+
+------------------------------------------------------------------------------
 
 After installing, you'll have to put in a few mappings into your .vimrc. Here's one option: (though of course you can change `<Space>j` and `<Space>k` to whatever works for you.
 
