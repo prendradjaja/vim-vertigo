@@ -30,15 +30,15 @@ this, and more?
 Installation
 ------------
 
-This should work with standard plugin managers, though I haven't tried any besides [Pathogen](https://github.com/tpope/vim-pathogen).
+This should work with all the standard plugin managers.
 
-* With Pathogen:
+* With [Pathogen](https://github.com/tpope/vim-pathogen):
     * `git clone https://github.com/prendradjaja/vim-vertigo.git ~/.vim/bundle/vim-vertigo`
-* With Pathogen, as submodule:
+* With Pathogen, as [submodule](http://vimcasts.org/episodes/synchronizing-plugins-with-git-submodules-and-pathogen/):
     * `git submodule add https://github.com/prendradjaja/vim-vertigo.git ~/.vim/bundle/vim-vertigo`
-* With NeoBundle:
+* With [NeoBundle](https://github.com/Shougo/neobundle.vim):
     *  `NeoBundle 'prendradjaja/vim-vertigo'`
-* With Vundle:
+* With [Vundle](https://github.com/gmarik/vundle):
     *  `Bundle 'prendradjaja/vim-vertigo'`
 * Manual installation:
     * Copy into `~/.vim`, so plugin/teleport.vim goes to `~/.vim/plugin` and doc/teleport.txt goes to `~/.vim/doc`.
@@ -51,3 +51,7 @@ After installing, you'll have to put in a few mappings into your .vimrc. Here's 
     nnoremap <silent> <Space>k :<C-U>VertigoUp n<CR>
     vnoremap <silent> <Space>k :<C-U>VertigoUp v<CR>
     onoremap <silent> <Space>k :<C-U>VertigoUp o<CR>
+
+One last thing. Make sure you've got `relativenumber` and/or `number` turned on, and you're good to go!
+
+    set relativenumber
