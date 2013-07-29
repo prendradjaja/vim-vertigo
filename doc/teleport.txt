@@ -54,9 +54,9 @@ Make sure you have one or both of the following in your .vimrc: >
 ==============================================================================
 Usage                                                           *teleport-use*
 
-The example in the introduction covers most of how to use this plugin, but
-there are a few other details to cover. Perhaps the most important is that at
-any time, you can use <Esc> or CTRL-C to cancel a jump.
+The example in the introduction actually covers most of how to use this
+plugin, but there are a few other details to cover. Perhaps the most important
+is that at any time, you can use <Esc> to cancel a jump.
 
 The example in the introduction demonstrated jumping up or down 10 or more
 lines, which is as follows:
