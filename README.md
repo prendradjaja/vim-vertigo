@@ -32,12 +32,13 @@ Installation
 __Important note__: Regardless of what installation method you use, Vertigo
 requires you to add some mappings to your .vimrc file. (see below)
 
-I recommend [Pathogen](https://github.com/tpope/vim-pathogen):
+I use [Pathogen](https://github.com/tpope/vim-pathogen):
 
     cd ~/.vim
     git clone https://github.com/prendradjaja/vim-vertigo.git bundle/vim-vertigo
 
 Alternatively, with Pathogen, using a git [submodule](http://vimcasts.org/episodes/synchronizing-plugins-with-git-submodules-and-pathogen/):
+
     cd ~/.vim
     git submodule add https://github.com/prendradjaja/vim-vertigo.git bundle/vim-vertigo
 
