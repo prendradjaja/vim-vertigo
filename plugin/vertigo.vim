@@ -35,10 +35,7 @@ command! -nargs=1 VertigoUp   call <SID>Vertigo('k', 'up',   '<args>')
 " GetUserInput(). If the user doesn't cancel, DoAbsoluteJump/DoRelativeJump()
 " is called with the user's input.
 "
-" If using DoAbsoluteJump(), that function will calculate how many lines up or
-" down to go, and then call DoRelativeJump().
-"
-" DoRelativeJump() does the actual jump.
+" Either of those functions calls DoJump(), which does the actual jumping.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function! s:Vertigo(motion, direction, mode)
@@ -83,13 +80,13 @@ function! s:PromptRelativeJump(motion, direction, mode)
   if m[0] == 0
     redraw | echo | return
   elseif m[0] == 1
-    call s:DoRelativeJump(m[1], a:motion, a:mode)
+    call s:DoRelativeJump(m[1], a:motion, promptstr.m[1], a:mode)
     return | endif
   let promptstr .= m[1]
   let n = s:GetUserInput(promptstr)
   if n[0] == 0
     redraw | echo | return | endif
-  call s:DoRelativeJump(m[1].n[1], a:motion, a:mode)
+  call s:DoRelativeJump(m[1].n[1], a:motion, promptstr.n[1], a:mode)
 endfunction
 
 function! s:PromptAbsoluteJump(mode)
@@ -105,13 +102,13 @@ function! s:PromptAbsoluteJump(mode)
   if m[0] == 0
     redraw | echo | return
   elseif m[0] == 1
-    call s:DoAbsoluteJump(m[1], a:mode)
+    call s:DoAbsoluteJump(m[1], promptstr.m[1], a:mode)
     return | endif
   let promptstr .= m[1]
   let n = s:GetUserInput(promptstr)
   if n[0] == 0
     redraw | echo | return | endif
-  call s:DoAbsoluteJump(m[1].n[1], a:mode)
+  call s:DoAbsoluteJump(m[1].n[1], promptstr.n[1], a:mode)
 endfunction
 
 function! s:GetUserInput(promptstr)
@@ -143,6 +140,11 @@ function! s:GetUserInput(promptstr)
     elseif has_key(s:keymap, c)
       return [2, s:keymap[c]]
     endif
+
+    redraw
+    echohl Question
+    echo a:promptstr . ' (<Esc> to cancel)'
+    echohl None
   endwhile
 endfunction
 
@@ -155,7 +157,7 @@ for i in range(0, 9)
   let s:keymap_onedigit[s:homerow_onedigit[i]] = (i+1)%10
 endfor
 
-function! s:DoRelativeJump(lines, motion, mode)
+function! s:DoJump(lines, motion, msg, mode)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "* ARGUMENTS:
 "    lines:   How many lines to jump.
@@ -173,10 +175,21 @@ function! s:DoRelativeJump(lines, motion, mode)
     normal! V
   endif
   execute 'normal! ' . lines_nr . a:motion
-  redraw | echo
+  redraw | echo a:msg
 endfunction
 
-function! s:DoAbsoluteJump(twodigit, mode)
+function! s:DoRelativeJump(lines, motion, msg, mode)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"* ARGUMENTS:
+"    lines:   How many lines to jump.
+"    See Vertigo() for the descriptions of 'motion' and 'mode'.
+"* EFFECTS:
+"    Jumps 'lines' lines up or down, according to 'motion'.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  call s:DoJump(a:lines, a:motion, a:msg.' ---', a:mode)
+endfunction
+
+function! s:DoAbsoluteJump(twodigit, msg, mode)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "* ARGUMENTS:
 "    twodigit:  A number from 0-99 -- the last two digits of the line we're
@@ -204,7 +217,7 @@ function! s:DoAbsoluteJump(twodigit, mode)
     let lines = linenr - curline
     let motion = 'j'
   endif
-  call s:DoRelativeJump(lines, motion, a:mode)
+  call s:DoJump(lines, motion, a:msg.' --> '.linenr, a:mode)
 endfunction
 
 function! s:GetAbsJumpLineNumber(twodigit)
