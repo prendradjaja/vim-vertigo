@@ -72,3 +72,7 @@ the examples above used relative numbering, Vertigo works just as well with
 absolute line numbers) turned on, and you're good to go!
 
     set relativenumber
+
+(and/or)
+
+    set number
