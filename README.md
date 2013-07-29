@@ -17,7 +17,7 @@ that, you're 14 lines down.
 Why?
 ----
 
-Why not just use `4k` or `22j` when you need to? And doesn't EasyMotion cover
+Why not just use `4k` or `22j` when you need to? And doesn't [EasyMotion](https://github.com/Lokaltog/vim-easymotion) cover
 this, and more?
 
 * It's faster.
@@ -30,4 +30,24 @@ this, and more?
 Installation
 ------------
 
-    [instructions here]
+This should work with standard plugin managers, though I haven't tried any besides [Pathogen](https://github.com/tpope/vim-pathogen).
+
+* With Pathogen:
+    * `git clone https://github.com/prendradjaja/vim-vertigo.git ~/.vim/bundle/vim-vertigo`
+* With Pathogen, as submodule:
+    * `git submodule add https://github.com/prendradjaja/vim-vertigo.git ~/.vim/bundle/vim-vertigo`
+* With NeoBundle:
+    *  `NeoBundle 'prendradjaja/vim-vertigo'`
+* With Vundle:
+    *  `Bundle 'prendradjaja/vim-vertigo'`
+* Manual installation:
+    * Copy into `~/.vim`, so plugin/teleport.vim goes to `~/.vim/plugin` and doc/teleport.txt goes to `~/.vim/doc`.
+
+After installing, you'll have to put in a few mappings into your .vimrc. Here's one option: (though of course you can change `<Space>j` and `<Space>k` to whatever works for you.
+
+    nnoremap <silent> <Space>j :<C-U>VertigoDown n<CR>
+    vnoremap <silent> <Space>j :<C-U>VertigoDown v<CR>
+    onoremap <silent> <Space>j :<C-U>VertigoDown o<CR>
+    nnoremap <silent> <Space>k :<C-U>VertigoUp n<CR>
+    vnoremap <silent> <Space>k :<C-U>VertigoUp v<CR>
+    onoremap <silent> <Space>k :<C-U>VertigoUp o<CR>
