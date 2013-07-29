@@ -25,6 +25,7 @@ this, and more?
 * You never have to leave home row.
 * It's easy to learn, because your fingers already know where all the numbers
   are.
+* Why not?
 
 Installation
 ------------
