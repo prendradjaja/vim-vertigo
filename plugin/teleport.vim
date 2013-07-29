@@ -12,7 +12,7 @@ else
   let s:homerow = g:Teleport_homerow
 endif
 if !exists('g:Teleport_homerow_onedigit')
-  let s:homerow_onedigit = 'ASDFGHJKL'
+  let s:homerow_onedigit = substitute(toupper(s:homerow), ';', ':', '')
 else
   let s:homerow_onedigit = g:Teleport_homerow_onedigit
 endif
@@ -146,12 +146,10 @@ endfunction
 " numbers.
 let s:keymap = {}
 let s:keymap_onedigit = {}
-" Fill the dictionaries.
-for i in range(0, 8)
-  let s:keymap[s:homerow[i]] = i+1
-  let s:keymap_onedigit[s:homerow_onedigit[i]] = i+1
+for i in range(0, 9)
+  let s:keymap[s:homerow[i]] = (i+1)%10
+  let s:keymap_onedigit[s:homerow_onedigit[i]] = (i+1)%10
 endfor
-let s:keymap[s:homerow[9]] = 0
 
 function! s:DoRelativeJump(lines, motion, mode)
 "*****************************************************************************
@@ -162,6 +160,8 @@ function! s:DoRelativeJump(lines, motion, mode)
 "    Jumps 'lines' lines up or down, according to 'motion'.
 "*****************************************************************************
   let lines_nr = str2nr(a:lines)
+  if lines_nr ==# 0
+    redraw | echo | return | endif
   " Set mark for jumplist.
   normal! m'
   " In operator-pending mode, force a linewise motion.
