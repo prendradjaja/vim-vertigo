@@ -1,0 +1,117 @@
+*teleport.txt*  A faster way to move vertically
+
+==============================================================================
+Introduction                                                        *teleport*
+
+This plugin is based on a simple idea: that using 'relativenumber' with
+[count]j/k motions is a very useful, simple, and precise way of moving around
+vertically, and shouldn't require your hands to leave home row.
+
+Before explaining all the details, let's look an example: say you want to go
+to some line that you can see (with 'relativenumber') is 14 lines down.
+
+With this plugin, you'd press <Space>j to activate "jump mode." Vim then waits
+for two home-row keypresses representing a two-digit number, mapping
+"asdfghjkl;" to "1234567890". You then press "af" for 14, and just like that,
+you're 14 lines down.
+
+    Note: Key bindings are configurable, and not on by default. We'll use a
+    reasonable default for examples. You'll need to create some mappings in
+    your .vimrc in order to use this plugin. For this, see |teleport-setup|,
+    which is the next section.
+
+Note to non-QWERTY users: see |teleport-homerow| to change what home row is.
+
+==============================================================================
+Setting up your .vimrc                                        *teleport-setup*
+
+By default, Teleport.vim doesn't create any mappings -- just two ex commands.
+In order to make use of it, you should put mappings like the following in your
+.vimrc: >
+
+    nnoremap <silent> <Leader>j :<C-U>TeleportDown n<CR>
+    vnoremap <silent> <Leader>j :<C-U>TeleportDown v<CR>
+    onoremap <silent> <Leader>j :<C-U>TeleportDown o<CR>
+    nnoremap <silent> <Leader>k :<C-U>TeleportUp n<CR>
+    vnoremap <silent> <Leader>k :<C-U>TeleportUp v<CR>
+    onoremap <silent> <Leader>k :<C-U>TeleportUp o<CR>
+
+You can change the left side of the mappings -- <Leader>j and <Leader>k -- to
+whatever you want.
+
+Once that's set up, try using one of your new mappings. If you get a "jump"
+prompt at the bottom of your screen, then you should be just about ready to
+go! Give it a try, or press <Esc> or CTRL-C to cancel.
+
+Also, this plugin depends on you having line numbers on. While the example in
+the introduction was with relative numbering, ('relativenumber') you can also
+use it with absolute numbering, ('number') as explained in the next section.
+Make sure you have one or both of the following in your .vimrc: >
+
+    set relativenumber
+    set number
+
+==============================================================================
+Usage                                                           *teleport-use*
+
+The example in the introduction covers most of how to use this plugin, but
+there are a few other details to cover. Perhaps the most important is that at
+any time, you can use <Esc> or CTRL-C to cancel a jump.
+
+The example in the introduction demonstrated jumping up or down 10 or more
+lines, which is as follows:
+
+    1. Press <Space>k or <Space>j to jump up or down, respectively. A "jump
+       up" or "jump down" prompt will appear at the bottom of your screen.
+    2. Type the two-digit number of lines you want to jump on home row, as if
+       your hands were on the number row of the keyboard. For example, if you
+       want to jump 36 lines down, type "dh".
+
+Note that this depends on relative numbering being on. If absolute numbering
+is on, you can use a similar process:
+
+    1. Press <Space>k or <Space>j. It doesn't matter which. A "jump" prompt
+       will appear at the bottom of your screen.
+    2. Type the last two digits of the (on-screen) line number you want to
+       jump to, again on home row but as if your hands were on the number row.
+       For example, if you want to jump to line 119, type "al".
+
+The behavior of the plugin (reflected in the wording of the prompt) depends on
+your line-numbering settings, and should automatically match your line
+numbering. If you don't have line numbering on, the plugin defaults to
+using a "relative jump".
+
+The natural next question is how to jump a single-digit number of lines, or to
+a single-digit line number. There are two options:
+
+    1. You can type a zero in the number. For example, to jump to line 5, line
+       305, or 5 lines up or down, you can type ";g".
+    2. You can press shift (configurable -- see |teleport-onedigit|) to
+       indicate a one-digit number. In the previous example, you could just
+       type "G".
+
+These jumps can be used for movement, but also just like ordinary Vim motions:
+they can be used in Visual mode or as a |linewise| motion to an operator.
+
+==============================================================================
+Reconfiguring home row                                      *teleport-homerow*
+
+For users of keyboards other than QWERTY, the plugin's idea of "home row" is
+easily changed. Simply assign a value to g:Teleport_homerow in your .vimrc
+with all ten of the (lowercase) keys in home row on your keyboard. If
+unassigned, Teleport.vim acts as if this is set to "asdfghjkl;".
+
+For Dvorak users, use: >
+
+    let g:Teleport_homerow = 'aoeuidhtns'
+
+To make the shift key behave appropriately for single-digit jumps, set the
+g:Teleport_homerow_onedigit variable.
+                                                           *teleport-onedigit*
+The g:Teleport_homerow_onedigit variable sets what keys are used for
+single-digit jumps. If unassigned, Teleport.vim acts as if this is set to
+"ASDFGHJKL:".
+
+This can be set to any nine-character string. [finish this. also make it so.]
+
+vim:tw=78:ts=8:ft=help:norl:
