@@ -12,7 +12,11 @@ else
   let s:homerow = g:Teleport_homerow
 endif
 if !exists('g:Teleport_homerow_onedigit')
-  let s:homerow_onedigit = substitute(toupper(s:homerow), ';', ':', '')
+  if s:homerow ==# 'asdfghjkl;'
+    let s:homerow_onedigit = 'ASDFGHJKL:'
+  else
+    let s:homerow_onedigit = toupper(s:homerow)
+  endif
 else
   let s:homerow_onedigit = g:Teleport_homerow_onedigit
 endif
