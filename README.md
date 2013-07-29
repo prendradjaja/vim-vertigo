@@ -1,12 +1,12 @@
-Teleport.vim
-============
+Vertigo.vim
+===========
 
-Teleport.vim is a Vim plugin is based on a simple idea: that moving up and
+Vertigo.vim is a Vim plugin is based on a simple idea: that moving up and
 down using relative line numbers (e.g., `3j`, `15k`) is a very simple and
 precise way of moving around vertically, and shouldn't require your hands to
 leave home row.
 
-To show how Teleport works, let's look an example: say you want to go to some
+To show how Vertigo works, let's look an example: say you want to go to some
 line that you can see (with `relativenumber`) is 14 lines down.
 
 With this plugin, you'd press <Space>j to activate "jump mode." Vim then waits

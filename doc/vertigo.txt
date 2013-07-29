@@ -1,49 +1,49 @@
-*teleport.txt*  Teleport.vim: A better way to move vertically (ver. 0.0)
+*vertigo.txt*  Vertigo.vim: A better way to move vertically (ver. 0.0)
 
 CONTENTS
 --------
-   1. Introduction             |teleport|
-   2. Setting up your .vimrc   |teleport-setup|
-   3. Usage                    |teleport-use|
-   4. Configuration            |teleport-config|
-      - Setting home row       |teleport-homerow|
-      - Single-digit numbers   |teleport-onedigit|
-   5. Miscellany               |teleport-misc|
+   1. Introduction             |vertigo|
+   2. Setting up your .vimrc   |vertigo-setup|
+   3. Usage                    |vertigo-use|
+   4. Configuration            |vertigo-config|
+      - Setting home row       |vertigo-homerow|
+      - Single-digit numbers   |vertigo-onedigit|
+   5. Miscellany               |vertigo-misc|
 
 ==============================================================================
-1. Introduction                                                     *teleport*
+1. Introduction                                                      *vertigo*
 
 This plugin is based on a simple idea: that moving up and down using relative
 line numbers (e.g., 3j, 15k) is a very simple and precise way of moving around
 vertically, and shouldn't require your hands to leave home row.
 
-To show how Teleport works, let's look an example: say you want to go to some
+To show how Vertigo works, let's look an example: say you want to go to some
 line that you can see (with 'relativenumber') is 14 lines down.
 
-With Teleport, you'd press <Space>j to activate "jump mode." Vim then waits
-for two home-row keypresses representing a two-digit number, mapping
-"asdfghjkl;" to "1234567890". You then press "af" for 14, and just like that,
-you're 14 lines down.
+With Vertigo, you'd press <Space>j to activate "jump mode." Vim then waits for
+two home-row keypresses representing a two-digit number, mapping "asdfghjkl;"
+to "1234567890". You then press "af" for 14, and just like that, you're 14
+lines down.
 
     Note: The key bindings are configurable, and not on by default. You'll
     need to create some mappings in your .vimrc in order to use this plugin,
     which you'll see in the next section.
 
-Non-QWERTY users: see |teleport-homerow| to change what home row is.
+Non-QWERTY users: see |vertigo-homerow| to change what home row is.
 
 ==============================================================================
-2. Setting up your .vimrc                                     *teleport-setup*
+2. Setting up your .vimrc                                      *vertigo-setup*
 
-By default, Teleport doesn't create any mappings -- just two Ex commands. In
+By default, Vertigo doesn't create any mappings -- just two Ex commands. In
 order to make use of it, you'll need to put some mappings in your .vimrc. Here
 are some reasonable defaults, which we'll use in the examples: >
 
-    nnoremap <silent> <Space>j :<C-U>TeleportDown n<CR>
-    vnoremap <silent> <Space>j :<C-U>TeleportDown v<CR>
-    onoremap <silent> <Space>j :<C-U>TeleportDown o<CR>
-    nnoremap <silent> <Space>k :<C-U>TeleportUp n<CR>
-    vnoremap <silent> <Space>k :<C-U>TeleportUp v<CR>
-    onoremap <silent> <Space>k :<C-U>TeleportUp o<CR>
+    nnoremap <silent> <Space>j :<C-U>VertigoDown n<CR>
+    vnoremap <silent> <Space>j :<C-U>VertigoDown v<CR>
+    onoremap <silent> <Space>j :<C-U>VertigoDown o<CR>
+    nnoremap <silent> <Space>k :<C-U>VertigoUp n<CR>
+    vnoremap <silent> <Space>k :<C-U>VertigoUp v<CR>
+    onoremap <silent> <Space>k :<C-U>VertigoUp o<CR>
 
 Of course, you can change the left side of the mappings (<Space>j and
 <Space>k) to whatever you want.
@@ -59,7 +59,7 @@ or both of the following in your .vimrc: >
 Lastly, this plugin will not run if 'compatible' is set.
 
 ==============================================================================
-3. Usage                                                        *teleport-use*
+3. Usage                                                         *vertigo-use*
 
 The example in the introduction actually covers most of how to use this
 plugin, but there are a few other details to cover. Perhaps the most important
@@ -93,7 +93,7 @@ there are two options:
 
     1. You can type a zero in the number. For example, to jump to line 5, line
        305, or 5 lines up or down, you can type ";g".
-    2. You can press shift (configurable -- see |teleport-onedigit|) to
+    2. You can press shift (configurable -- see |vertigo-onedigit|) to
        indicate a one-digit number. In the previous example, you could just
        type "G".
 
@@ -103,68 +103,68 @@ used just like any other Vim motions: they can be used in Visual mode or as
 you would use d28j.
 
 ==============================================================================
-4. Configuration                                             *teleport-config*
+4. Configuration                                              *vertigo-config*
 
 If you use the QWERTY keyboard layout, chances are you'll be fine with the
 defaults. If you use a different keyboard layout, though, you'll need to set
-one or both of g:Teleport_homerow and g:Teleport_homerow_onedigit.
-                                                          *teleport-loadorder*
-Note that these variables need to be set before the teleport.vim plugin file
+one or both of g:Vertigo_homerow and g:Vertigo_homerow_onedigit.
+                                                           *vertigo-loadorder*
+Note that these variables need to be set before the vertigo.vim plugin file
 loads. You can check what order scripts are loaded using :scriptnames. In
 particular, if you aren't using Pathogen or another plugin manager, you'll
 probably need to make sure configuration lines are above plugin-loading lines
 in your .vimrc.
 
-Setting home row                                            *teleport-homerow*
+Setting home row                                             *vertigo-homerow*
 ----------------
-For users of keyboards other than QWERTY, Teleport's idea of "home row" is
-easily changed. Simply assign a value to g:Teleport_homerow in your .vimrc
-with all ten of the (lowercase) keys in home row on your keyboard. If
-unassigned, Teleport acts as if this is set to "asdfghjkl;".
+For users of keyboards other than QWERTY, Vertigo's idea of "home row" is
+easily changed. Simply assign a value to g:Vertigo_homerow in your .vimrc with
+all ten of the (lowercase) keys in home row on your keyboard. If unassigned,
+Vertigo acts as if this is set to "asdfghjkl;".
 
 For example, Dvorak users would use: >
 
-    let g:Teleport_homerow = 'aoeuidhtns'
+    let g:Vertigo_homerow = 'aoeuidhtns'
 
-Note: See |teleport-loadorder| about setting configuration variables
+Note: See |vertigo-loadorder| about setting configuration variables
 
 If you're using a keyboard layouts with keys that don't simply turn into
 uppercase letters when shift is pressed, (except QWERTY, which works fine by
 default) you should read this next bit.
-                                                           *teleport-onedigit*
-The g:Teleport_homerow_onedigit variable (which you can set in your .vimrc)
+                                                            *vertigo-onedigit*
+The g:Vertigo_homerow_onedigit variable (which you can set in your .vimrc)
 sets what keys are used for single-digit jumps. By default, this is QWERTY's
 home row, with shift pressed: "ASDFGHJKL:".
 
 You can set it to whatever you want, however. For example, if you want the row
 above home row to be for single-digit numbers, you can use: >
 
-    let g:Teleport_homerow_onedigit = 'qwertyuiop'
+    let g:Vertigo_homerow_onedigit = 'qwertyuiop'
 
-Note: See |teleport-loadorder| about setting configuration variables
+Note: See |vertigo-loadorder| about setting configuration variables
 
-If you don't set this variable but change g:Teleport_homerow from the default
-"asdfhjkl;", however, Teleport will set the uppercased version of
-g:Teleport_homerow as a default for g:Teleport_homerow_onedigit. For example,
-if you're using the Dvorak keyboard, you'd set home row like this: >
+If you don't set this variable but change g:Vertigo_homerow from the default
+"asdfhjkl;", however, Vertigo will set the uppercased version of
+g:Vertigo_homerow as a default for g:Vertigo_homerow_onedigit. For example, if
+you're using the Dvorak keyboard, you'd set home row like this: >
 
-    let g:Teleport_homerow = 'aoeuidhtns'
+    let g:Vertigo_homerow = 'aoeuidhtns'
 
-By default, Teleport will use 'AOEUIDHTNS' for g:Teleport_homerow_onedigit.
-This should work for many other keyboard layouts, but will fail if any of your
-home row keys don't simply turn into uppercase letters when shift is pressed.
+By default, Vertigo will use 'AOEUIDHTNS' for g:Vertigo_homerow_onedigit. This
+should work for many other keyboard layouts, but will fail if any of your home
+row keys don't simply turn into uppercase letters when shift is pressed.
 
 A special case is used to handle QWERTY, but for other layouts, you'll have to
-manually set g:Teleport_homerow_onedigit.
+manually set g:Vertigo_homerow_onedigit.
 
 ==============================================================================
-5. Miscellany                                                  *teleport-misc*
+5. Miscellany                                                   *vertigo-misc*
 
 Author:   Pandu Rendradjaja
 License:  Same terms as Vim -- see |license|
 
 Source repository:
-https://github.com/prendradjaja/vim-teleport
+https://github.com/prendradjaja/vim-vertigo
 
 ------------------------------------------------------------------------------
  vim:tw=78:ts=8:ft=help:norl:

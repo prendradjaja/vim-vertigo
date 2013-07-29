@@ -1,33 +1,33 @@
-" Teleport.vim
-" https://github.com/prendradjaja/vim-teleport
+" Vertigo.vim
+" https://github.com/prendradjaja/vim-vertigo
 
-if exists('g:Teleport_loaded') || &compatible
+if exists('g:Vertigo_loaded') || &compatible
   finish
 endif
-let g:Teleport_loaded = 1
+let g:Vertigo_loaded = 1
 
-if !exists('g:Teleport_homerow')
+if !exists('g:Vertigo_homerow')
   let s:homerow = 'asdfghjkl;'
 else
-  let s:homerow = g:Teleport_homerow
+  let s:homerow = g:Vertigo_homerow
 endif
-if !exists('g:Teleport_homerow_onedigit')
+if !exists('g:Vertigo_homerow_onedigit')
   if s:homerow ==# 'asdfghjkl;'
     let s:homerow_onedigit = 'ASDFGHJKL:'
   else
     let s:homerow_onedigit = toupper(s:homerow)
   endif
 else
-  let s:homerow_onedigit = g:Teleport_homerow_onedigit
+  let s:homerow_onedigit = g:Vertigo_homerow_onedigit
 endif
 
-command! -nargs=1 TeleportDown call <SID>Teleport('j', 'down', '<args>')
-command! -nargs=1 TeleportUp   call <SID>Teleport('k', 'up',   '<args>')
+command! -nargs=1 VertigoDown call <SID>Vertigo('j', 'down', '<args>')
+command! -nargs=1 VertigoUp   call <SID>Vertigo('k', 'up',   '<args>')
 
-"*****************************************************************************
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General description of control flow:
 "
-" :TeleportDown or :TeleportUp calls Teleport(). Teleport() calls either
+" :VertigoDown or :VertigoUp calls Vertigo(). Vertigo() calls either
 " PromptAbsoluteJump() or PromptRelativeJump(), depending on the user's
 " 'number' setting.
 "
@@ -39,10 +39,10 @@ command! -nargs=1 TeleportUp   call <SID>Teleport('k', 'up',   '<args>')
 " down to go, and then call DoRelativeJump().
 "
 " DoRelativeJump() does the actual jump.
-"*****************************************************************************
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! s:Teleport(motion, direction, mode)
-"*****************************************************************************
+function! s:Vertigo(motion, direction, mode)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "* ARGUMENTS:
 "    motion:     Which motion to use. ('j' or 'k')
 "    direction:  A description of the motion. ('down' or 'up')
@@ -53,7 +53,7 @@ function! s:Teleport(motion, direction, mode)
 "    Prompts the user to jump. After this function exits, the cursor is moved.
 "    (if the user doesn't cancel)
 "    Returns nothing.
-"*****************************************************************************
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
   " If used in visual mode, Vim exited visual mode in order to get here.
   " Re-enter visual mode.
@@ -71,13 +71,13 @@ function! s:Teleport(motion, direction, mode)
 endfunction
 
 function! s:PromptRelativeJump(motion, direction, mode)
-"*****************************************************************************
-"* ARGUMENTS: Same as Teleport().
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"* ARGUMENTS: Same as Vertigo().
 "* EFFECTS:
 "    Prompts the user to jump up or down. After this function exits, the
 "    cursor is moved. (if the user doesn't cancel)
 "    Returns nothing.
-"*****************************************************************************
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   let promptstr = 'Jump ' . a:direction . ': '
   let m = s:GetUserInput(promptstr)
   if m[0] == 0
@@ -93,13 +93,13 @@ function! s:PromptRelativeJump(motion, direction, mode)
 endfunction
 
 function! s:PromptAbsoluteJump(mode)
-"*****************************************************************************
-"* ARGUMENTS: See Teleport() for the description of 'mode'.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"* ARGUMENTS: See Vertigo() for the description of 'mode'.
 "* EFFECTS:
 "    Prompts the user to jump to a specific line. After this function exits,
 "    the cursor is moved. (if the user doesn't cancel)
 "    Returns nothing.
-"*****************************************************************************
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   let promptstr = 'Jump: '
   let m = s:GetUserInput(promptstr)
   if m[0] == 0
@@ -115,7 +115,7 @@ function! s:PromptAbsoluteJump(mode)
 endfunction
 
 function! s:GetUserInput(promptstr)
-"*****************************************************************************
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "* ARGUMENTS:
 "    promptstr:  A string to prompt the user for input. When first called,
 "                this will be something like 'Jump: ', but after the user
@@ -129,7 +129,7 @@ function! s:GetUserInput(promptstr)
 "    - [0] for canceling
 "    - [1, n] for a one-digit number
 "    - [2, n] for one digit of a two-digit number
-"*****************************************************************************
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   redraw
   echohl Question
   echo a:promptstr
@@ -156,13 +156,13 @@ for i in range(0, 9)
 endfor
 
 function! s:DoRelativeJump(lines, motion, mode)
-"*****************************************************************************
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "* ARGUMENTS:
 "    lines:   How many lines to jump.
-"    See Teleport() for the descriptions of 'motion' and 'mode'.
+"    See Vertigo() for the descriptions of 'motion' and 'mode'.
 "* EFFECTS:
 "    Jumps 'lines' lines up or down, according to 'motion'.
-"*****************************************************************************
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   let lines_nr = str2nr(a:lines)
   if lines_nr ==# 0
     redraw | echo | return | endif
@@ -177,21 +177,21 @@ function! s:DoRelativeJump(lines, motion, mode)
 endfunction
 
 function! s:DoAbsoluteJump(twodigit, mode)
-"*****************************************************************************
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "* ARGUMENTS:
 "    twodigit:  A number from 0-99 -- the last two digits of the line we're
 "               jumping to.
-"    See Teleport() for the description of 'mode'.
+"    See Vertigo() for the description of 'mode'.
 "* EFFECTS:
 "    Jumps to the first line on screen with line number ending in 'twodigit',
 "    or display an error message if there is no such line.
-"*****************************************************************************
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   let twodigit_nr = str2nr(a:twodigit)
   let linenr = s:GetAbsJumpLineNumber(twodigit_nr)
   if linenr ==# -1
     redraw
     echohl ErrorMsg
-    echo '[Teleport.vim] Bad line number: ' . a:twodigit
+    echo '[Vertigo.vim] Bad line number: ' . a:twodigit
     echohl None
     return | endif
   let curline = line('.')
@@ -208,7 +208,7 @@ function! s:DoAbsoluteJump(twodigit, mode)
 endfunction
 
 function! s:GetAbsJumpLineNumber(twodigit)
-"*****************************************************************************
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "* ARGUMENTS:
 "    twodigit:  A number from 0-99 -- the last two digits of the line we're
 "               jumping to.
@@ -221,7 +221,7 @@ function! s:GetAbsJumpLineNumber(twodigit)
 "    s:AbsJump(99) = 299
 "    s:AbsJump(12) = 312
 "    s:AbsJump(22) = -1
-"*****************************************************************************
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   let start = line('w0')
   let end = line('w$')
   let hundreds = start / 100 * 100
