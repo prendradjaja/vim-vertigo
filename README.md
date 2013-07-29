@@ -29,6 +29,9 @@ Can't I just use `4k` or `22j` when I need to? And doesn't [EasyMotion](https://
 Installation
 ------------
 
+__Important note__: Regardless of what installation method you use, Vertigo
+requires you to add some mappings to your .vimrc file. (see below)
+
 I recommend [Pathogen](https://github.com/tpope/vim-pathogen):
 
     cd ~/.vim
