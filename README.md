@@ -35,12 +35,12 @@ requires you to add some mappings to your .vimrc file. (see below)
 I use [Pathogen](https://github.com/tpope/vim-pathogen):
 
     cd ~/.vim
-    git clone https://github.com/prendradjaja/vim-vertigo.git bundle/vim-vertigo
+    git clone https://github.com/prendradjaja/vim-vertigo.git bundle/vertigo
 
 Alternatively, with Pathogen, using a git [submodule](http://vimcasts.org/episodes/synchronizing-plugins-with-git-submodules-and-pathogen/):
 
     cd ~/.vim
-    git submodule add https://github.com/prendradjaja/vim-vertigo.git bundle/vim-vertigo
+    git submodule add https://github.com/prendradjaja/vim-vertigo.git bundle/vertigo
 
 I haven't personally used other plugin managers, but this should work with any of the ordinary plugin managers.
 
