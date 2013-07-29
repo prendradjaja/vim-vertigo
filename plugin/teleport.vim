@@ -12,7 +12,7 @@ else
   let s:homerow = g:Teleport_homerow
 endif
 if !exists('g:Teleport_homerow_onedigit')
-  let s:homerow_onedigit = 'ASDFGHJKL:'
+  let s:homerow_onedigit = 'ASDFGHJKL'
 else
   let s:homerow_onedigit = g:Teleport_homerow_onedigit
 endif
@@ -147,10 +147,11 @@ endfunction
 let s:keymap = {}
 let s:keymap_onedigit = {}
 " Fill the dictionaries.
-for i in range(0, 9)
-  let s:keymap[s:homerow[i]] = (i+1)%10
-  let s:keymap_onedigit[s:homerow_onedigit[i]] = (i+1)%10
+for i in range(0, 8)
+  let s:keymap[s:homerow[i]] = i+1
+  let s:keymap_onedigit[s:homerow_onedigit[i]] = i+1
 endfor
+let s:keymap[s:homerow[9]] = 0
 
 function! s:DoRelativeJump(lines, motion, mode)
 "*****************************************************************************
