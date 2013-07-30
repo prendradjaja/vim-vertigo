@@ -22,7 +22,9 @@ Other keyboards should work too. (see `:h vertigo-homerow`)
 Why?
 ----
 
-Can't I just use `4k` or `22j` when I need to? And doesn't [EasyMotion](https://github.com/Lokaltog/vim-easymotion) cover this, and more? Well...
+Can't I just use `4k` or `22j` when I need to? And doesn't 
+[EasyMotion](https://github.com/Lokaltog/vim-easymotion) cover this, and more? 
+Well...
 
 * It's faster.
 * It's more comfortable.
@@ -42,23 +44,28 @@ I use [Pathogen](https://github.com/tpope/vim-pathogen):
     cd ~/.vim
     git clone https://github.com/prendradjaja/vim-vertigo.git bundle/vertigo
 
-Alternatively, with Pathogen, using a git [submodule](http://vimcasts.org/episodes/synchronizing-plugins-with-git-submodules-and-pathogen/):
+Alternatively, with Pathogen, using a git 
+[submodule](http://vimcasts.org/episodes/synchronizing-plugins-with-git-submodules-and-pathogen/):
 
     cd ~/.vim
     git submodule add https://github.com/prendradjaja/vim-vertigo.git bundle/vertigo
 
-I haven't personally used other plugin managers, but this should work with any of the ordinary plugin managers.
+I haven't personally used other plugin managers, but this should work with any 
+of the ordinary plugin managers.
 
 * With [NeoBundle](https://github.com/Shougo/neobundle.vim):
     *  `NeoBundle 'prendradjaja/vim-vertigo'`
 * With [Vundle](https://github.com/gmarik/vundle):
     *  `Bundle 'prendradjaja/vim-vertigo'`
 
-For manual installation, copy into `~/.vim`, so plugin/vertigo.vim goes to `~/.vim/plugin` and doc/vertigo.txt goes to `~/.vim/doc`.
+For manual installation, copy into `~/.vim`, so plugin/vertigo.vim goes to 
+`~/.vim/plugin` and doc/vertigo.txt goes to `~/.vim/doc`.
 
 ### .vimrc mappings
 
-After installing, you'll have to put in a few mappings into your .vimrc. Here's one option: (though of course you can change `<Space>j` and `<Space>k` to whatever works for you.
+After installing, you'll have to put in a few mappings into your .vimrc. 
+Here's one option: (though of course you can change `<Space>j` and `<Space>k` 
+to whatever works for you.
 
     nnoremap <silent> <Space>j :<C-U>VertigoDown n<CR>
     vnoremap <silent> <Space>j :<C-U>VertigoDown v<CR>
