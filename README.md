@@ -22,9 +22,8 @@ Other keyboards should work too. (see `:h vertigo-homerow`)
 Why?
 ----
 
-Can't I just use `4k` or `22j` when I need to? And doesn't 
-[EasyMotion](https://github.com/Lokaltog/vim-easymotion) cover this, and more? 
-Well...
+Can't I just use `4k` or `22j` when I need to? And doesn't [EasyMotion][a]
+cover this, and more? Well...
 
 * It's faster.
 * It's more comfortable.
@@ -39,13 +38,12 @@ Installation
 __Important note__: Regardless of what installation method you use, Vertigo
 requires you to add some mappings to your .vimrc file. (see below)
 
-I use [Pathogen](https://github.com/tpope/vim-pathogen):
+I use [Pathogen][b]:
 
     cd ~/.vim
     git clone https://github.com/prendradjaja/vim-vertigo.git bundle/vertigo
 
-Alternatively, with Pathogen, using a git 
-[submodule](http://vimcasts.org/episodes/synchronizing-plugins-with-git-submodules-and-pathogen/):
+Alternatively, with Pathogen, using a git [submodule][c]:
 
     cd ~/.vim
     git submodule add https://github.com/prendradjaja/vim-vertigo.git bundle/vertigo
@@ -53,9 +51,9 @@ Alternatively, with Pathogen, using a git
 I haven't personally used other plugin managers, but this should work with any 
 of the ordinary plugin managers.
 
-* With [NeoBundle](https://github.com/Shougo/neobundle.vim):
+* With [NeoBundle][d]:
     *  `NeoBundle 'prendradjaja/vim-vertigo'`
-* With [Vundle](https://github.com/gmarik/vundle):
+* With [Vundle][e]:
     *  `Bundle 'prendradjaja/vim-vertigo'`
 
 For manual installation, copy into `~/.vim`, so plugin/vertigo.vim goes to 
@@ -83,3 +81,11 @@ absolute line numbers) turned on, and you're good to go!
 (and/or)
 
     set number
+
+
+
+[a]: https://github.com/Lokaltog/vim-easymotion
+[b]: https://github.com/tpope/vim-pathogen
+[c]: http://vimcasts.org/episodes/synchronizing-plugins-with-git-submodules-and-pathogen/
+[d]: https://github.com/Shougo/neobundle.vim
+[e]: https://github.com/gmarik/vundle
