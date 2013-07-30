@@ -54,7 +54,7 @@ I haven't personally used other plugin managers, but this should work with any o
 * With [Vundle](https://github.com/gmarik/vundle):
     *  `Bundle 'prendradjaja/vim-vertigo'`
 
-For manual installation, copy into `~/.vim`, so plugin/teleport.vim goes to `~/.vim/plugin` and doc/teleport.txt goes to `~/.vim/doc`.
+For manual installation, copy into `~/.vim`, so plugin/vertigo.vim goes to `~/.vim/plugin` and doc/vertigo.txt goes to `~/.vim/doc`.
 
 ### .vimrc mappings
 
