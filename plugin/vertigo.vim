@@ -140,11 +140,7 @@ function! s:GetUserInput(promptstr)
     elseif has_key(s:keymap, c)
       return [2, s:keymap[c]]
     endif
-
-    redraw
-    echohl Question
-    echo a:promptstr . ' (<Esc> to cancel)'
-    echohl None
+    call s:BadInput(a:promptstr)
   endwhile
 endfunction
 
@@ -156,6 +152,18 @@ for i in range(0, 9)
   let s:keymap[s:homerow[i]] = (i+1)%10
   let s:keymap_onedigit[s:homerow_onedigit[i]] = (i+1)%10
 endfor
+
+let s:helpmsg = '(<Esc> to cancel)'
+function! s:BadInput(promptstr)
+  redraw
+  echohl Question
+  if a:promptstr[len(a:promptstr)-1] == ' '
+    echo a:promptstr . s:helpmsg
+  else
+    echo a:promptstr . ' ' . s:helpmsg
+  endif
+  echohl None
+endfunction
 
 function! s:DoJump(lines, motion, msg, mode)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
