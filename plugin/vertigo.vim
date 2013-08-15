@@ -21,6 +21,12 @@ else
   let s:homerow_onedigit = g:Vertigo_homerow_onedigit
 endif
 
+if !exists('g:Vertigo_onedigit_method')
+  let s:onedigit_method = 'forcetwo'
+else
+  let s:onedigit_method = g:Vertigo_onedigit_method
+endif
+
 command! -nargs=1 VertigoDown call <SID>Vertigo('j', 'down', '<args>')
 command! -nargs=1 VertigoUp   call <SID>Vertigo('k', 'up',   '<args>')
 
@@ -136,12 +142,39 @@ function! s:GetUserInput(promptstr)
     if c == ''
       return [0]
     elseif has_key(s:keymap_onedigit, c)
-      return [1, s:keymap_onedigit[c]]
+      return [s:DigitType(1, s:keymap_onedigit[c]),
+            \ s:keymap_onedigit[c]]
     elseif has_key(s:keymap, c)
-      return [2, s:keymap[c]]
+      return [s:DigitType(0, s:keymap[c]),
+            \ s:keymap[c]]
     endif
     call s:BadInput(a:promptstr)
   endwhile
+endfunction
+
+function! s:DigitType(usedshift, keypressed)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"* ARGUMENTS:
+"    usedshift:   Whether or not the user pressed shift. (boolean)
+"    keypressed:  What numerical key the user's keypress corresponded to.
+"* RETURNS:
+"    A 1 or 2, as described in GetUserInput().
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  if s:onedigit_method ==# 'forcetwo'
+    return !a:usedshift + 1
+  elseif s:onedigit_method ==# 'smart1'
+    if a:keypressed == 1
+      return !a:usedshift + 1
+    else
+      return a:usedshift + 1
+    endif
+  elseif s:onedigit_method ==# 'smart2'
+    if a:keypressed == 1 || a:keypressed == 2
+      return !a:usedshift + 1
+    else
+      return a:usedshift + 1
+    endif
+  endif
 endfunction
 
 " These dictionaries are used by GetUserInput() to turn home-row keys into
