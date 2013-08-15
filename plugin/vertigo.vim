@@ -6,11 +6,17 @@ if exists('g:Vertigo_loaded') || &compatible
 endif
 let g:Vertigo_loaded = 1
 
+" Make Ex commands for mapping
+command! -nargs=1 VertigoDown call <SID>Vertigo('j', 'down', '<args>')
+command! -nargs=1 VertigoUp   call <SID>Vertigo('k', 'up',   '<args>')
+
+" Load user settings
 if !exists('g:Vertigo_homerow')
   let s:homerow = 'asdfghjkl;'
 else
   let s:homerow = g:Vertigo_homerow
 endif
+
 if !exists('g:Vertigo_homerow_onedigit')
   if s:homerow ==# 'asdfghjkl;'
     let s:homerow_onedigit = 'ASDFGHJKL:'
@@ -26,9 +32,6 @@ if !exists('g:Vertigo_onedigit_method')
 else
   let s:onedigit_method = g:Vertigo_onedigit_method
 endif
-
-command! -nargs=1 VertigoDown call <SID>Vertigo('j', 'down', '<args>')
-command! -nargs=1 VertigoUp   call <SID>Vertigo('k', 'up',   '<args>')
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General description of control flow:
