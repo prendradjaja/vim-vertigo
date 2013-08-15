@@ -142,7 +142,7 @@ function! s:GetUserInput(promptstr)
   echohl None
   while 1
     let c = nr2char(getchar())
-    if c == ''
+    if c == '' || c == ''
       return [0]
     elseif has_key(s:keymap_onedigit, c)
       return [s:DigitType(1, s:keymap_onedigit[c]),
