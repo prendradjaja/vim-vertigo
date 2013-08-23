@@ -165,14 +165,8 @@ function! s:DigitType(usedshift, keypressed)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   if s:onedigit_method ==# 'forcetwo'
     return !a:usedshift + 1
-  elseif s:onedigit_method ==# 'smart1'
-    if a:keypressed == 1
-      return !a:usedshift + 1
-    else
-      return a:usedshift + 1
-    endif
-  elseif s:onedigit_method ==# 'smart2'
-    if a:keypressed == 1 || a:keypressed == 2
+  elseif s:onedigit_method[:4] ==# 'smart'
+    if a:keypressed != 0 && a:keypressed <= s:onedigit_method[5]
       return !a:usedshift + 1
     else
       return a:usedshift + 1
