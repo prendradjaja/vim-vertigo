@@ -62,8 +62,7 @@ Lastly, this plugin will not run if 'compatible' is set.
 3. Usage                                                         *vertigo-use*
 
 The example in the introduction actually covers most of how to use this
-plugin, but there are a few other details to cover. Perhaps the most important
-is that at any time, you can use <Esc> to cancel a jump.
+plugin, but there are a few other details to cover.
 
 The example in the introduction demonstrated jumping up or down 10 or more
 lines, which is as follows:
