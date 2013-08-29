@@ -133,7 +133,7 @@ function! s:GetUserInput(promptstr)
   echohl None
   while 1
     let c = nr2char(getchar())
-    if c == ''
+    if c == '' || c == ''
       return [0]
     elseif has_key(s:keymap_onedigit, c)
       return [1, s:keymap_onedigit[c]]
@@ -153,7 +153,7 @@ for i in range(0, 9)
   let s:keymap_onedigit[s:homerow_onedigit[i]] = (i+1)%10
 endfor
 
-let s:helpmsg = '(<Esc> to cancel)'
+let s:helpmsg = '(<Esc> or CTRL-C to cancel)'
 function! s:BadInput(promptstr)
   redraw
   echohl Question
