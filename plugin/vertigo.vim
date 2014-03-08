@@ -163,7 +163,7 @@ function! s:DigitType(usedshift, keypressed)
 "* RETURNS:
 "    A 1 or 2, as described in GetUserInput().
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  if s:onedigit_method ==# 'forcetwo'
+  if s:onedigit_method ==# 'forcetwo' || s:UsingAbsoluteNumbering()
     return !a:usedshift + 1
   elseif s:onedigit_method[:4] ==# 'smart'
     if a:keypressed != 0 && a:keypressed <= s:onedigit_method[5]
