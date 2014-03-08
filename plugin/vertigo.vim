@@ -69,7 +69,7 @@ function! s:Vertigo(motion, direction, mode)
 
   " If using absolute numbering, use an absolute jump. Otherwise, (if using
   " relative numbering, or no line numbering at all) use a relative jump.
-  if &number && (!exists('+relativenumber') || !&relativenumber)
+  if s:UsingAbsoluteNumbering()
     call s:PromptAbsoluteJump(a:mode)
   else
     call s:PromptRelativeJump(a:motion, a:direction, a:mode)
@@ -285,4 +285,9 @@ function! s:GetAbsJumpLineNumber(twodigit)
     return try
   endif
   return -1
+endfunction
+
+function! s:UsingAbsoluteNumbering()
+" Returns whether or not the user is currently using absolute numbering.
+  return &number && (!exists('+relativenumber') || !&relativenumber)
 endfunction
