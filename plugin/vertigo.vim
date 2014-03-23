@@ -6,11 +6,17 @@ if exists('g:Vertigo_loaded') || &compatible
 endif
 let g:Vertigo_loaded = 1
 
+" Make Ex commands for mapping
+command! -nargs=1 VertigoDown call <SID>Vertigo('j', 'down', '<args>')
+command! -nargs=1 VertigoUp   call <SID>Vertigo('k', 'up',   '<args>')
+
+" Load user settings
 if !exists('g:Vertigo_homerow')
   let s:homerow = 'asdfghjkl;'
 else
   let s:homerow = g:Vertigo_homerow
 endif
+
 if !exists('g:Vertigo_homerow_onedigit')
   if s:homerow ==# 'asdfghjkl;'
     let s:homerow_onedigit = 'ASDFGHJKL:'
@@ -21,8 +27,11 @@ else
   let s:homerow_onedigit = g:Vertigo_homerow_onedigit
 endif
 
-command! -nargs=1 VertigoDown call <SID>Vertigo('j', 'down', '<args>')
-command! -nargs=1 VertigoUp   call <SID>Vertigo('k', 'up',   '<args>')
+if !exists('g:Vertigo_onedigit_method')
+  let s:onedigit_method = 'forcetwo'
+else
+  let s:onedigit_method = g:Vertigo_onedigit_method
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General description of control flow:
@@ -60,7 +69,7 @@ function! s:Vertigo(motion, direction, mode)
 
   " If using absolute numbering, use an absolute jump. Otherwise, (if using
   " relative numbering, or no line numbering at all) use a relative jump.
-  if &number && (!exists('+relativenumber') || !&relativenumber)
+  if s:UsingAbsoluteNumbering()
     call s:PromptAbsoluteJump(a:mode)
   else
     call s:PromptRelativeJump(a:motion, a:direction, a:mode)
@@ -136,12 +145,33 @@ function! s:GetUserInput(promptstr)
     if c == '' || c == ''
       return [0]
     elseif has_key(s:keymap_onedigit, c)
-      return [1, s:keymap_onedigit[c]]
+      return [s:DigitType(1, s:keymap_onedigit[c]),
+            \ s:keymap_onedigit[c]]
     elseif has_key(s:keymap, c)
-      return [2, s:keymap[c]]
+      return [s:DigitType(0, s:keymap[c]),
+            \ s:keymap[c]]
     endif
     call s:BadInput(a:promptstr)
   endwhile
+endfunction
+
+function! s:DigitType(usedshift, keypressed)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"* ARGUMENTS:
+"    usedshift:   Whether or not the user pressed shift. (boolean)
+"    keypressed:  What numerical key the user's keypress corresponded to.
+"* RETURNS:
+"    A 1 or 2, as described in GetUserInput().
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  if s:onedigit_method ==# 'forcetwo' || s:UsingAbsoluteNumbering()
+    return !a:usedshift + 1
+  elseif s:onedigit_method[:4] ==# 'smart'
+    if a:keypressed != 0 && a:keypressed <= s:onedigit_method[5]
+      return !a:usedshift + 1
+    else
+      return a:usedshift + 1
+    endif
+  endif
 endfunction
 
 " These dictionaries are used by GetUserInput() to turn home-row keys into
@@ -255,4 +285,9 @@ function! s:GetAbsJumpLineNumber(twodigit)
     return try
   endif
   return -1
+endfunction
+
+function! s:UsingAbsoluteNumbering()
+" Returns whether or not the user is currently using absolute numbering.
+  return &number && (!exists('+relativenumber') || !&relativenumber)
 endfunction
