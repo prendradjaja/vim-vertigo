@@ -8,7 +8,6 @@ CONTENTS
    4. Configuration            |vertigo-config|
       - Setting home row       |vertigo-homerow|
       - Single-digit numbers   |vertigo-onedigit|
-   5. Miscellany               |vertigo-misc|
 
 ==============================================================================
 1. Introduction                                                      *vertigo*
@@ -58,6 +57,11 @@ or both of the following in your .vimrc: >
 
 Lastly, this plugin will not run if 'compatible' is set.
 
+Non-QWERTY users: see |vertigo-homerow| to change what home row is. If you're
+using Dvorak, you can just add this to your .vimrc: >
+
+    let g:Vertigo_homerow = 'aoeuidhtns'
+
 ==============================================================================
 3. Usage                                                         *vertigo-use*
 
@@ -75,32 +79,37 @@ lines, which is as follows:
        want to jump 36 lines down, type "dh".
 
 Note that this depends on relative numbering being on. If absolute numbering
-is on, you can use a similar process:
-
-    1. Press <Space>k or <Space>j. It doesn't matter which. A "jump" prompt
-       will appear at the bottom of your screen.
-    2. Type the last two digits of the (on-screen) line number you want to
-       jump to, again on home row but as if your hands were on the number row.
-       For example, if you want to jump to line 119, type "al".
-
-The behavior of the plugin (reflected in the wording of the prompt) depends on
-your line-numbering settings, and should automatically change to match them.
-If you don't have line numbering on, the plugin defaults to using a "relative
-jump".
+is on, this plugin will instead take the last two digits of the line number
+you want to jump to, as long as it's visible on-screen.
 
 To jump a single-digit number of lines, or to a single-digit line number,
-there are two options:
+there are a few options. See |vertigo-onedigit|.
 
+These jumps can be used for movement, but they can also be used just like any
+other Vim motions: they can be used in Visual mode or as |linewise| motions to
+operators. For example, you can use d<Space>jsk where you would use d28j.
+
+---
+
+A note about single-digit numbers:                          *vertigo-onedigit*
+
+By default, you can use either of two methods to input single-digit numbers.
     1. You can type a zero in the number. For example, to jump to line 5, line
        305, or 5 lines up or down, you can type ";g".
     2. You can press shift (configurable -- see |vertigo-onedigit|) to
        indicate a one-digit number. In the previous example, you could just
        type "G".
 
-These jumps can be used for movement, but, more powerfully, they can also be
-used just like any other Vim motions: they can be used in Visual mode or as
-|linewise| motions to operators. For example, you can use d<Space>jsk where
-you would use d28j.
+Alternatively, you can enable a "smarter" method:
+    If you type a large number like 6 or 7, you probably want to jump by 6 or
+7 lines, not 60-something or 70-something. But if you type a small number like
+1 or 2, you probably do want to jump by a two-digit number of lines. You can
+enable this input method (and choose the cutoff between "large" and "small"
+numbers) with a command like this in your .vimrc: >
+
+    let g:Vertigo_onedigit_method = 'smart4'
+    " 4 or smaller is 'small,' and 5 or larger is 'large'
+    " You can also use 'smart2' or any other cutoff you want.
 
 ==============================================================================
 4. Configuration                                              *vertigo-config*
@@ -108,7 +117,7 @@ you would use d28j.
 If you use the QWERTY keyboard layout, chances are you'll be fine with the
 defaults. If you use a different keyboard layout, though, you'll need to set
 one or both of g:Vertigo_homerow and g:Vertigo_homerow_onedigit.
-                                                           *vertigo-loadorder*
+
 Note that these variables need to be set before the vertigo.vim plugin file
 loads. You can check what order scripts are loaded using :scriptnames. In
 particular, if you aren't using Pathogen or another plugin manager, you'll
@@ -126,12 +135,10 @@ For example, Dvorak users would use: >
 
     let g:Vertigo_homerow = 'aoeuidhtns'
 
-Note: See |vertigo-loadorder| about setting configuration variables
+Note: If you're using a keyboard layout other than Dvorak or QWERTY, you
+should read this next part.
 
-If you're using a keyboard layouts with keys that don't simply turn into
-uppercase letters when shift is pressed, (except QWERTY, which works fine by
-default) you should read this next bit.
-                                                            *vertigo-onedigit*
+                                                   *vertigo-onedigit-variable*
 The g:Vertigo_homerow_onedigit variable (which you can set in your .vimrc)
 sets what keys are used for single-digit jumps. By default, this is QWERTY's
 home row, with shift pressed: "ASDFGHJKL:".
@@ -140,8 +147,6 @@ You can set it to whatever you want, however. For example, if you want the row
 above home row to be for single-digit numbers, you can use: >
 
     let g:Vertigo_homerow_onedigit = 'qwertyuiop'
-
-Note: See |vertigo-loadorder| about setting configuration variables
 
 If you don't set this variable but change g:Vertigo_homerow from the default
 "asdfhjkl;", however, Vertigo will set the uppercased version of
