@@ -23,11 +23,9 @@ Why?
 ----
 
 Can't I just use `4k` or `22j` when I need to? And doesn't [EasyMotion][a]
-cover this, and more? Well...
+cover this, and more? Yes! But:
 
-* It's faster.
-* It's more comfortable.
-* You never have to leave home row.
+* It's lightning fast: You never have to leave home row.
 * It's easy to learn, because your fingers already know where all the numbers
   are.
 * Why not?
