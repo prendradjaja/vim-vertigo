@@ -79,6 +79,11 @@ absolute line numbers) turned on, and you're good to go!
 (and/or)
 
     set number
+    
+Related
+-------
+
+- [Emacs port](https://github.com/noctuid/vertigo.el) by noctuid (I have not tried it)
 
 
 
