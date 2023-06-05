@@ -110,6 +110,14 @@ numbers) with a command like this in your .vimrc: >
     " 4 or smaller is 'small,' and 5 or larger is 'large'
     " You can also use 'smart2' or any other cutoff you want.
 
+If you would like a more manual approach but often forget to type zero or
+shift, you can set a key to submit the typed digit with a command like this in
+your .vimrc: >
+
+    let g:Vertigo_onedigit_key = ' '
+    " Triggering a jump prompt and typing 5<Space> jumps 5 lines
+    " You can set this to any key
+
 ==============================================================================
 4. Configuration                                              *vertigo-config*
 

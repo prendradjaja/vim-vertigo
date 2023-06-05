@@ -33,6 +33,12 @@ else
   let s:onedigit_method = g:Vertigo_onedigit_method
 endif
 
+if !exists('g:Vertigo_onedigit_key')
+  let s:onedigit_key = 'none'
+else
+  let s:onedigit_key = g:Vertigo_onedigit_key
+endif
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General description of control flow:
 "
@@ -128,8 +134,8 @@ function! s:GetUserInput(promptstr)
 "                enters a digit, this will be something like 'Jump: 3'. (to
 "                simulate typing)
 "* EFFECTS:
-"    Prompts the user to jump. Only accepts input from the home row keys or ^C
-"    or <Esc> to cancel.
+"    Prompts the user to jump. Only accepts input from the home row keys, ^C
+"    or <Esc> to cancel, or the onedigit key to submit.
 "* RETURNS:
 "    A list describing the user's input, as follows.
 "    - [0] for canceling
@@ -144,6 +150,8 @@ function! s:GetUserInput(promptstr)
     let c = nr2char(getchar())
     if c == '' || c == ''
       return [0]
+    elseif c == s:onedigit_key
+      return [1, '']
     elseif has_key(s:keymap_onedigit, c)
       return [s:DigitType(1, s:keymap_onedigit[c]),
             \ s:keymap_onedigit[c]]
