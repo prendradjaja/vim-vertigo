@@ -68,7 +68,7 @@ function! s:Vertigo(motion, direction, mode)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Hook run when begining vertigo jump
-  doautocommand User VertigoEnter
+  doautocmd User VertigoEnter
 
   " If used in visual mode, Vim exited visual mode in order to get here.
   " Re-enter visual mode.
@@ -153,7 +153,7 @@ function! s:GetUserInput(promptstr)
     let c = nr2char(getchar())
     if c == '' || c == ''
       " Hook run when canceling vertigo jump
-      doautocommand User VertigoCancel
+      doautocmd User VertigoCancel
       return [0]
     elseif c == s:onedigit_key
       return [1, '']
@@ -226,9 +226,9 @@ function! s:DoJump(lines, motion, msg, mode)
     normal! V
   endif
   execute 'normal! ' . lines_nr . a:motion
-  redraw | echo a:msg
   " Hook run when completing vertigo jump
-  doautocommand User VertigoExit
+  doautocmd User VertigoCancel
+  redraw | echo a:msg
 endfunction
 
 function! s:DoRelativeJump(lines, motion, msg, mode)
