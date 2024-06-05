@@ -1,10 +1,9 @@
 Vertigo.vim
 ===========
 
-Vertigo.vim is a Vim plugin is based on a simple idea: that moving up and
-down using relative line numbers (e.g., `3j`, `15k`) is a very simple and
-precise way of moving around vertically, and shouldn't require your hands to
-leave home row.
+Moving up and down using relative line numbers (e.g., `3j`, `15k`) is a very
+simple and precise way of moving around vertically, and shouldn't require your
+hands to leave home row.
 
 To show how Vertigo works, let's look an example: say you want to go to some
 line that you can see (with `relativenumber`) is 14 lines down.
@@ -22,13 +21,25 @@ Other keyboards should work too. (see `:h vertigo-homerow`)
 Why?
 ----
 
-Can't I just use `4k` or `22j` when I need to? And doesn't [EasyMotion][a]
-cover this, and more? Yes! But:
+Can't I just use `14j` or `2k` with vanilla Vim (no plugin needed)? And
+doesn't [EasyMotion][a] cover this, and more? Yes! But:
 
-* It's lightning fast: You never have to leave home row.
+* Vertigo is lightning fast: You never have to leave home row. And unlike
+  EasyMotion, you don't have to read the "targets" that appear on-screen
+  before completing the motion.
 * It's easy to learn, because your fingers already know where all the numbers
   are.
-* Why not?
+
+I should admit: As a Dvorak user, I find this very useful, but I think it's
+probably less useful for QWERTY users. This is because in QWERTY, something
+like `14j` or `2k` with vanilla Vim moves smoothly from the left hand (`1`,
+`4`, `2`) to the right (`j`, `k`). But in Dvorak, the `j` and `k` keys are on
+the left hand (much like the small digits `12345`, which are much more
+commonly used than the large digits `6789`), which makes this key sequence
+more cumbersome to type.
+
+I like micro-optimizations. :) If you do too, (and maybe use Dvorak) this
+might be the plugin for you.
 
 Installation
 ------------
