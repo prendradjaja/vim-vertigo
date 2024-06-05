@@ -5,7 +5,7 @@ Moving up and down using relative line numbers (e.g., `3j`, `15k`) is a very
 simple and precise way of moving around vertically, and shouldn't require your
 hands to leave home row.
 
-To show how Vertigo works, let's look an example: say you want to go to some
+To show how Vertigo works, let's look an example: Say you want to go to some
 line that you can see (with `relativenumber`) is 14 lines down.
 
 With this plugin, you'd press `<Space>j` to activate "jump mode." Vim then waits
@@ -15,7 +15,7 @@ that, you're 14 lines down. Easy! For one-digit numbers, just hit shift.
 (`<Space>jF` goes four lines down)
 
 If you use a keyboard layout other than QWERTY, that's not a problem! Dvorak
-users: just add `let g:Vertigo_homerow = 'aoeuidhtns'` to your .vimrc file.
+users: Just add `let g:Vertigo_homerow = 'aoeuidhtns'` to your .vimrc file.
 Other keyboards should work too. (see `:h vertigo-homerow`)
 
 Why?
@@ -36,9 +36,11 @@ probably less useful for QWERTY users. This is because in QWERTY, something
 like `14j` or `2k` with vanilla Vim moves smoothly from the left hand (`1`,
 `4`, `2`) to the right (`j`, `k`).
 
-But in Dvorak, the `j` and `k` keys are on the left hand (much like the small
-digits `12345`, which are much more commonly used than the large digits
-`6789`), which makes this key sequence more cumbersome to type.
+But in Dvorak, the placement of the `j` and `k` keys makes sequences like this
+quite cumbersome to type: To type `2j` or `2k`, your left hand has to jump all
+the way up to the number row, and then all the way down to the bottom row.
+(And this is all with one hand -- so slow. We Dvorak users like our
+["alternating hands!"][alternating])
 
 I like micro-optimizations. :) If you do too, (and maybe use Dvorak) this
 might be the plugin for you.
@@ -105,3 +107,4 @@ Related
 [c]: http://vimcasts.org/episodes/synchronizing-plugins-with-git-submodules-and-pathogen/
 [d]: https://github.com/Shougo/neobundle.vim
 [e]: https://github.com/gmarik/vundle
+[alternating]: https://en.wikipedia.org/wiki/Dvorak_keyboard_layout#:~:text=Letters%20should%20be%20typed%20by%20alternating%20between%20hands
