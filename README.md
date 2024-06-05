@@ -24,19 +24,21 @@ Why?
 Can't I just use `14j` or `2k` with vanilla Vim (no plugin needed)? And
 doesn't [EasyMotion][a] cover this, and more? Yes! But:
 
-* Vertigo is lightning fast: You never have to leave home row. And unlike
-  EasyMotion, you don't have to read the "targets" that appear on-screen
-  before completing the motion.
+* Vertigo is lightning fast: You never have to leave home row.
+* Faster than EasyMotion?: You don't have to read EasyMotion's "targets" that
+  appear on-screen in order to complete the motion -- if you have line numbers
+  turned on, you always have targets visible on-screen.
 * It's easy to learn, because your fingers already know where all the numbers
   are.
 
 I should admit: As a Dvorak user, I find this very useful, but I think it's
 probably less useful for QWERTY users. This is because in QWERTY, something
 like `14j` or `2k` with vanilla Vim moves smoothly from the left hand (`1`,
-`4`, `2`) to the right (`j`, `k`). But in Dvorak, the `j` and `k` keys are on
-the left hand (much like the small digits `12345`, which are much more
-commonly used than the large digits `6789`), which makes this key sequence
-more cumbersome to type.
+`4`, `2`) to the right (`j`, `k`).
+
+But in Dvorak, the `j` and `k` keys are on the left hand (much like the small
+digits `12345`, which are much more commonly used than the large digits
+`6789`), which makes this key sequence more cumbersome to type.
 
 I like micro-optimizations. :) If you do too, (and maybe use Dvorak) this
 might be the plugin for you.
