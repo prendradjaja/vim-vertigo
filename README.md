@@ -99,6 +99,7 @@ Related
 -------
 
 - [Emacs port](https://github.com/noctuid/vertigo.el) by noctuid (I have not tried it)
+- [Ranger port](https://github.com/zachary-krepelka/ranger-vertigo)
 
 
 
