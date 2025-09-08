@@ -95,11 +95,13 @@ absolute line numbers) turned on, and you're good to go!
 
     set number
     
-Related
--------
+Vertigo for other editors etc
+-----------------------------
 
-- [Emacs port](https://github.com/noctuid/vertigo.el) by noctuid (I have not tried it)
-- [Ranger port](https://github.com/zachary-krepelka/ranger-vertigo)
+Made by others. I have not tried them and cannot vouch for them, but I'm pleased they exist.
+
+- [Emacs port](https://github.com/noctuid/vertigo.el) by noctuid
+- [Ranger port](https://github.com/zachary-krepelka/ranger-vertigo) by zachary-krepelka
 
 
 
